@@ -1,6 +1,3 @@
-import pytest
-
-from src.modules.tasks.entities.task import TaskStatus
 from src.shared.exceptions.domain import ForbiddenError, NotFoundError
 from tests.test_integration.conftest import SAMPLE_TASK
 

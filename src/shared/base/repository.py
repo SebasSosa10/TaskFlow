@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Any, Generic, TypeVar
 
 from sqlalchemy import func, select
@@ -20,9 +20,13 @@ class BaseRepository(ABC, Generic[ModelT]):
         return result.scalar_one_or_none()
 
     async def get_all(self, skip: int = 0, limit: int = 100) -> list[ModelT]:
-        result = await self.session.execute(
-            select(self.model).offset(skip).limit(limit).order_by(self.model.id)  # type: ignore[attr-defined]
+        query = (
+            select(self.model)
+            .offset(skip)
+            .limit(limit)
+            .order_by(self.model.id)  # type: ignore[attr-defined]
         )
+        result = await self.session.execute(query)
         return list(result.scalars().all())
 
     async def create(self, data: dict[str, Any]) -> ModelT:

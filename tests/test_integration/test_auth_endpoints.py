@@ -1,11 +1,6 @@
-from unittest.mock import AsyncMock
-
-import pytest
-
 from src.modules.auth.schemas.auth import TokenResponse
-from src.modules.users.schemas.user import UserResponse
 from src.shared.exceptions.domain import AlreadyExistsError, UnauthorizedError
-from tests.test_integration.conftest import ADMIN_USER, NOW, REGULAR_USER
+from tests.test_integration.conftest import REGULAR_USER
 
 
 class TestLoginEndpoint:

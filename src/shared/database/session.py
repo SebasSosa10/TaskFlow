@@ -3,7 +3,6 @@ from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from src.shared.config.settings import settings
-from src.shared.database.base import Base
 
 
 def import_all_models() -> None:

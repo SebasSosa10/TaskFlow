@@ -29,7 +29,9 @@ class UserModel(Base):
     full_name: Mapped[str] = mapped_column(String(255), nullable=False)
     role: Mapped[UserRole] = mapped_column(
         SAEnum(
-            UserRole, values_callable=lambda x: [e.value for e in x], native_enum=False
+            UserRole,
+            values_callable=lambda x: [e.value for e in x],
+            native_enum=False,
         ),
         default=UserRole.USUARIO,
         nullable=False,

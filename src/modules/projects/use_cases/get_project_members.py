@@ -3,8 +3,7 @@ from src.modules.projects.repositories.project_member_repository import (
 )
 from src.modules.projects.repositories.project_repository import ProjectRepository
 from src.modules.projects.schemas.project_member import ProjectMemberResponse
-from src.modules.users.repositories.user_repository import UserRepository
-from src.shared.exceptions.domain import AlreadyExistsError, NotFoundError
+from src.shared.exceptions.domain import NotFoundError
 from src.shared.utils.mappers import project_member_to_response
 
 

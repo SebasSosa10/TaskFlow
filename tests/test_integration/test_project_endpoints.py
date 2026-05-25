@@ -1,5 +1,3 @@
-import pytest
-
 from src.shared.exceptions.domain import ForbiddenError, NotFoundError
 from tests.test_integration.conftest import SAMPLE_PROJECT
 

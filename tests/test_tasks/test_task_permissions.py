@@ -2,7 +2,6 @@ import pytest
 
 from src.modules.tasks.entities.task import TaskStatus
 from src.modules.tasks.use_cases.task_permissions import (
-    ALLOWED_TRANSITIONS,
     ensure_can_manage_project,
     ensure_can_work_on_task,
     validate_status_transition,

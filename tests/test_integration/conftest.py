@@ -5,7 +5,6 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 
 from src.main import app
-from src.modules.auth.schemas.auth import TokenResponse
 from src.modules.auth.services.auth_service import AuthService
 from src.modules.projects.schemas.project import ProjectResponse
 from src.modules.projects.services.project_service import ProjectService

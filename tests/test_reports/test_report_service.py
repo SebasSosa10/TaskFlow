@@ -1,5 +1,3 @@
-import pytest
-
 from src.modules.reports.services.report_service import ReportService
 from src.modules.tasks.entities.task import TaskStatus
 from src.modules.users.entities.user import UserRole

@@ -1,6 +1,5 @@
 import pytest
 
-from src.modules.projects.entities.project import ProjectStatus
 from src.modules.projects.schemas.project import ProjectCreate, ProjectUpdate
 from src.modules.projects.schemas.project_member import ProjectMemberCreate
 from src.modules.projects.use_cases.add_project_member import AddProjectMemberUseCase

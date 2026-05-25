@@ -2,7 +2,6 @@ from datetime import datetime
 
 from pydantic import Field
 
-from src.modules.users.entities.user import UserRole
 from src.shared.base.schemas import BaseSchema
 
 
