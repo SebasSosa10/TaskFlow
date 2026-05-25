@@ -6,36 +6,12 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org)
+[![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
 [![CI](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
-[![License](https://img.shields.io/badge/Licencia-MIT-yellow?style=for-the-badge)](LICENSE)
-
 TaskFlow es una API REST diseñada para que equipos de trabajo puedan organizar proyectos, asignar tareas, visualizar el progreso en un tablero Kanban y generar reportes de desempeño — todo desde un único backend moderno, rápido y escalable.
 
-[Explorar docs »](#-documentación-interactiva) · [Endpoints »](#-endpoints-principales) · [Instalación »](#-instalación)
-
 </div>
-
----
-
-## 📑 Tabla de contenido
-
-- [Sobre el proyecto](#-sobre-el-proyecto)
-- [Funcionalidades](#-funcionalidades)
-- [Arquitectura](#-arquitectura)
-- [Tecnologías](#-tecnologías)
-- [Instalación](#-instalación)
-- [Variables de entorno](#-variables-de-entorno)
-- [Endpoints principales](#-endpoints-principales)
-- [Documentación interactiva](#-documentación-interactiva)
-- [Docker](#-docker)
-- [Testing](#-testing)
-- [CI/CD](#-cicd)
-- [Buenas prácticas](#-buenas-prácticas)
-- [Estado del proyecto](#-estado-del-proyecto)
-- [Autores](#-autores)
-- [Licencia](#-licencia)
 
 ---
 
@@ -135,7 +111,7 @@ Cada módulo sigue la misma estructura interna: `entities/` → `repositories/` 
 |---|---|---|
 | **Backend** | FastAPI | Framework web async de alto rendimiento |
 | **Lenguaje** | Python 3.11+ | Tipado estático, async/await nativo |
-| **Base de datos** | PostgreSQL | Base de datos relacional robusta |
+| **Base de datos** | SQL Server | Base de datos relacional robusta |
 | **ORM** | SQLAlchemy 2.0 (async) | Mapeo objeto-relacional con soporte async |
 | **Autenticación** | python-jose + passlib | JWT tokens y hashing bcrypt |
 | **Validación** | Pydantic v2 | Validación y serialización de datos |
@@ -151,7 +127,8 @@ Cada módulo sigue la misma estructura interna: `entities/` → `repositories/` 
 ### Requisitos previos
 
 - Python 3.11 o superior
-- PostgreSQL (o Docker para levantarlo automáticamente)
+- SQL Server (o Docker para levantarlo automáticamente)
+- ODBC Driver 17 for SQL Server
 - Git
 
 ### Paso a paso
@@ -426,19 +403,8 @@ Este proyecto fue desarrollado siguiendo estándares profesionales de ingenierí
 
 | Nombre | Rol |
 |---|---|
-| **Joan Sebastián Sosa Bedoya** | Desarrollo backend |
-| **Alejandra Mejía Patiño** | Desarrollo backend |
+| **Joan Sebastián Sosa Bedoya** | Ingeniero de Software |
+| **Alejandra Mejía Patiño** | Ingeniera de Software |
 
 ---
 
-## 📄 Licencia
-
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
-
----
-
-<div align="center">
-
-Hecho con ❤️ por el equipo TaskFlow
-
-</div>
