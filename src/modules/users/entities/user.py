@@ -1,7 +1,9 @@
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import DateTime, Enum as SAEnum, String, func
+from sqlalchemy import DateTime
+from sqlalchemy import Enum as SAEnum
+from sqlalchemy import String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.shared.database.base import Base
@@ -17,12 +19,18 @@ class UserModel(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
-    username: Mapped[str] = mapped_column(String(100), unique=True, index=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(255), unique=True, index=True, nullable=False
+    )
+    username: Mapped[str] = mapped_column(
+        String(100), unique=True, index=True, nullable=False
+    )
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     full_name: Mapped[str] = mapped_column(String(255), nullable=False)
     role: Mapped[UserRole] = mapped_column(
-        SAEnum(UserRole, values_callable=lambda x: [e.value for e in x], native_enum=False),
+        SAEnum(
+            UserRole, values_callable=lambda x: [e.value for e in x], native_enum=False
+        ),
         default=UserRole.USUARIO,
         nullable=False,
     )
@@ -50,4 +58,6 @@ class UserModel(Base):
     project_memberships: Mapped[list["ProjectMemberModel"]] = relationship(
         back_populates="user"
     )
-    notifications: Mapped[list["NotificationModel"]] = relationship(back_populates="user")
+    notifications: Mapped[list["NotificationModel"]] = relationship(
+        back_populates="user"
+    )

@@ -7,7 +7,10 @@ from src.modules.kanban.services.kanban_service import KanbanService
 from src.modules.users.schemas.user import UserResponse
 from src.shared.base.schemas import ErrorResponse
 from src.shared.exceptions.domain import DomainException
-from src.shared.middleware.dependencies import get_current_active_user, get_kanban_service
+from src.shared.middleware.dependencies import (
+    get_current_active_user,
+    get_kanban_service,
+)
 
 router = APIRouter(prefix="/kanban", tags=["Tablero Kanban"])
 
@@ -27,4 +30,6 @@ async def get_kanban_board(
     try:
         return await kanban_service.get_board(project_id)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc

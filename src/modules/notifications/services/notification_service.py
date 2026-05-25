@@ -1,6 +1,13 @@
-from src.modules.notifications.schemas.notification import NotificationCreate, NotificationResponse
-from src.modules.notifications.use_cases.create_notification import CreateNotificationUseCase
-from src.modules.notifications.use_cases.get_notifications import GetNotificationsUseCase
+from src.modules.notifications.schemas.notification import (
+    NotificationCreate,
+    NotificationResponse,
+)
+from src.modules.notifications.use_cases.create_notification import (
+    CreateNotificationUseCase,
+)
+from src.modules.notifications.use_cases.get_notifications import (
+    GetNotificationsUseCase,
+)
 from src.modules.users.entities.user import UserRole
 
 

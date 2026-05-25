@@ -271,9 +271,7 @@ class TestDeleteTaskUseCase:
     def _make_uc(self, task_repo, project_repo, record_history):
         return DeleteTaskUseCase(task_repo, project_repo, record_history)
 
-    async def test_delete_task_success(
-        self, task_repo, project_repo, record_history
-    ):
+    async def test_delete_task_success(self, task_repo, project_repo, record_history):
         task_repo.get_by_id.return_value = make_task(id=1, project_id=1)
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=1)
         uc = self._make_uc(task_repo, project_repo, record_history)
@@ -281,18 +279,14 @@ class TestDeleteTaskUseCase:
         await uc.execute(1, actor_id=1, actor_role=UserRole.ADMINISTRADOR)
         task_repo.delete.assert_awaited_once_with(1)
 
-    async def test_delete_task_not_found(
-        self, task_repo, project_repo, record_history
-    ):
+    async def test_delete_task_not_found(self, task_repo, project_repo, record_history):
         task_repo.get_by_id.return_value = None
         uc = self._make_uc(task_repo, project_repo, record_history)
 
         with pytest.raises(NotFoundError):
             await uc.execute(999, actor_id=1, actor_role=UserRole.ADMINISTRADOR)
 
-    async def test_delete_task_forbidden(
-        self, task_repo, project_repo, record_history
-    ):
+    async def test_delete_task_forbidden(self, task_repo, project_repo, record_history):
         task_repo.get_by_id.return_value = make_task(id=1, project_id=1)
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=2)
         uc = self._make_uc(task_repo, project_repo, record_history)
@@ -308,12 +302,13 @@ class TestUpdateTaskStatusUseCase:
     def _make_uc(self, task_repo, project_repo, record_history):
         return UpdateTaskStatusUseCase(task_repo, project_repo, record_history)
 
-    async def test_update_status_success(
-        self, task_repo, project_repo, record_history
-    ):
+    async def test_update_status_success(self, task_repo, project_repo, record_history):
         task = make_task(
-            id=1, project_id=1, status=TaskStatus.PENDIENTE,
-            assignee_id=3, created_by_id=3,
+            id=1,
+            project_id=1,
+            status=TaskStatus.PENDIENTE,
+            assignee_id=3,
+            created_by_id=3,
         )
         task_repo.get_by_id.return_value = task
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=1)
@@ -333,8 +328,11 @@ class TestUpdateTaskStatusUseCase:
         self, task_repo, project_repo, record_history
     ):
         task = make_task(
-            id=1, project_id=1, status=TaskStatus.COMPLETADA,
-            assignee_id=1, created_by_id=1,
+            id=1,
+            project_id=1,
+            status=TaskStatus.COMPLETADA,
+            assignee_id=1,
+            created_by_id=1,
         )
         task_repo.get_by_id.return_value = task
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=1)

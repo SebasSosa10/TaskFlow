@@ -47,9 +47,7 @@ class TestLoginUseCase:
         uc = self._make_uc(user_repo, record_history)
 
         with pytest.raises(UnauthorizedError, match="Credenciales inválidas"):
-            await uc.execute(
-                LoginRequest(username="noexiste", password="password123")
-            )
+            await uc.execute(LoginRequest(username="noexiste", password="password123"))
 
     async def test_login_inactive_user(self, user_repo, record_history):
         user = make_user(username="testuser", is_active=False)

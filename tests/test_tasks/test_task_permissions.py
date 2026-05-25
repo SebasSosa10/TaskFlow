@@ -46,7 +46,11 @@ class TestValidateStatusTransition:
             validate_status_transition(TaskStatus.BLOQUEADA, TaskStatus.COMPLETADA)
 
     def test_completada_to_any_forbidden(self):
-        for target in [TaskStatus.PENDIENTE, TaskStatus.EN_PROGRESO, TaskStatus.BLOQUEADA]:
+        for target in [
+            TaskStatus.PENDIENTE,
+            TaskStatus.EN_PROGRESO,
+            TaskStatus.BLOQUEADA,
+        ]:
             with pytest.raises(BusinessRuleError):
                 validate_status_transition(TaskStatus.COMPLETADA, target)
 
@@ -70,11 +74,15 @@ class TestEnsureCanManageProject:
 class TestEnsureCanWorkOnTask:
     def test_admin_always_allowed(self):
         task = make_task(assignee_id=99, created_by_id=99)
-        ensure_can_work_on_task(UserRole.ADMINISTRADOR, actor_id=1, owner_id=50, task=task)
+        ensure_can_work_on_task(
+            UserRole.ADMINISTRADOR, actor_id=1, owner_id=50, task=task
+        )
 
     def test_leader_own_project_allowed(self):
         task = make_task(assignee_id=99, created_by_id=99)
-        ensure_can_work_on_task(UserRole.LIDER_PROYECTO, actor_id=5, owner_id=5, task=task)
+        ensure_can_work_on_task(
+            UserRole.LIDER_PROYECTO, actor_id=5, owner_id=5, task=task
+        )
 
     def test_assignee_allowed(self):
         task = make_task(assignee_id=3, created_by_id=99)
@@ -87,4 +95,6 @@ class TestEnsureCanWorkOnTask:
     def test_unrelated_user_forbidden(self):
         task = make_task(assignee_id=10, created_by_id=20)
         with pytest.raises(ForbiddenError):
-            ensure_can_work_on_task(UserRole.USUARIO, actor_id=99, owner_id=50, task=task)
+            ensure_can_work_on_task(
+                UserRole.USUARIO, actor_id=99, owner_id=50, task=task
+            )

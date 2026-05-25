@@ -24,8 +24,12 @@ class TestLoginEndpoint:
         assert data["access_token"] == "jwt.token.here"
         assert data["token_type"] == "bearer"
 
-    async def test_login_invalid_credentials(self, authenticated_client, mock_auth_service):
-        mock_auth_service.login.side_effect = UnauthorizedError("Credenciales inválidas")
+    async def test_login_invalid_credentials(
+        self, authenticated_client, mock_auth_service
+    ):
+        mock_auth_service.login.side_effect = UnauthorizedError(
+            "Credenciales inválidas"
+        )
 
         response = await authenticated_client.post(
             "/api/auth/login",
@@ -64,7 +68,9 @@ class TestRegisterEndpoint:
         assert data["username"] == "regularuser"
         assert data["role"] == "usuario"
 
-    async def test_register_email_already_exists(self, authenticated_client, mock_auth_service):
+    async def test_register_email_already_exists(
+        self, authenticated_client, mock_auth_service
+    ):
         mock_auth_service.register.side_effect = AlreadyExistsError(
             "El email ya está registrado"
         )

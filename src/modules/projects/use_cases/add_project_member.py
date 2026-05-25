@@ -1,10 +1,19 @@
 from src.modules.history.use_cases.record_history import RecordHistoryUseCase
-from src.modules.projects.repositories.project_member_repository import ProjectMemberRepository
+from src.modules.projects.repositories.project_member_repository import (
+    ProjectMemberRepository,
+)
 from src.modules.projects.repositories.project_repository import ProjectRepository
-from src.modules.projects.schemas.project_member import ProjectMemberCreate, ProjectMemberResponse
+from src.modules.projects.schemas.project_member import (
+    ProjectMemberCreate,
+    ProjectMemberResponse,
+)
 from src.modules.users.entities.user import UserRole
 from src.modules.users.repositories.user_repository import UserRepository
-from src.shared.exceptions.domain import AlreadyExistsError, ForbiddenError, NotFoundError
+from src.shared.exceptions.domain import (
+    AlreadyExistsError,
+    ForbiddenError,
+    NotFoundError,
+)
 from src.shared.utils.mappers import project_member_to_response
 
 
@@ -62,4 +71,6 @@ class AddProjectMemberUseCase:
             return
         if role == UserRole.LIDER_PROYECTO and actor_id == owner_id:
             return
-        raise ForbiddenError("No tienes permisos para gestionar miembros de este proyecto")
+        raise ForbiddenError(
+            "No tienes permisos para gestionar miembros de este proyecto"
+        )

@@ -56,4 +56,6 @@ async def list_history_by_user(
         )
         return PaginatedResponse(items=entries, total=total, skip=skip, limit=limit)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc

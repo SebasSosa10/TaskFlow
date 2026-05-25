@@ -88,7 +88,9 @@ def mock_project_service():
 
 
 @pytest.fixture
-async def authenticated_client(mock_auth_service, mock_task_service, mock_project_service):
+async def authenticated_client(
+    mock_auth_service, mock_task_service, mock_project_service
+):
     app.dependency_overrides[get_current_active_user] = lambda: ADMIN_USER
     app.dependency_overrides[get_auth_service] = lambda: mock_auth_service
     app.dependency_overrides[get_task_service] = lambda: mock_task_service

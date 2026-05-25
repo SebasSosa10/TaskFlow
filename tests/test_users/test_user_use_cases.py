@@ -2,7 +2,6 @@ from unittest.mock import patch
 
 import pytest
 
-
 from src.modules.users.entities.user import UserRole
 from src.modules.users.schemas.user import (
     UserCreate,
@@ -32,7 +31,10 @@ class TestCreateUserUseCase:
     def _make_uc(self, user_repo, record_history):
         return CreateUserUseCase(user_repo, record_history)
 
-    @patch("src.modules.users.use_cases.create_user.hash_password", return_value="hashed_pw")
+    @patch(
+        "src.modules.users.use_cases.create_user.hash_password",
+        return_value="hashed_pw",
+    )
     async def test_create_user_as_admin(self, mock_hash, user_repo, record_history):
         user_repo.get_by_email.return_value = None
         user_repo.get_by_username.return_value = None

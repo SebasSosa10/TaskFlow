@@ -8,12 +8,16 @@ from src.shared.database.base import Base
 
 def import_all_models() -> None:
     """Registra todos los modelos ORM en metadata."""
-    from src.modules.users.entities.user import UserModel  # noqa: F401
-    from src.modules.projects.entities.project import ProjectModel  # noqa: F401
-    from src.modules.projects.entities.project_member import ProjectMemberModel  # noqa: F401
-    from src.modules.tasks.entities.task import TaskModel  # noqa: F401
     from src.modules.history.entities.history import HistoryModel  # noqa: F401
-    from src.modules.notifications.entities.notification import NotificationModel  # noqa: F401
+    from src.modules.notifications.entities.notification import (
+        NotificationModel,
+    )  # noqa: F401
+    from src.modules.projects.entities.project import ProjectModel  # noqa: F401
+    from src.modules.projects.entities.project_member import (
+        ProjectMemberModel,
+    )  # noqa: F401
+    from src.modules.tasks.entities.task import TaskModel  # noqa: F401
+    from src.modules.users.entities.user import UserModel  # noqa: F401
 
 
 import_all_models()

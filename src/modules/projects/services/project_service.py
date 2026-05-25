@@ -1,5 +1,12 @@
-from src.modules.projects.schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate
-from src.modules.projects.schemas.project_member import ProjectMemberCreate, ProjectMemberResponse
+from src.modules.projects.schemas.project import (
+    ProjectCreate,
+    ProjectResponse,
+    ProjectUpdate,
+)
+from src.modules.projects.schemas.project_member import (
+    ProjectMemberCreate,
+    ProjectMemberResponse,
+)
 from src.modules.projects.use_cases.add_project_member import AddProjectMemberUseCase
 from src.modules.projects.use_cases.create_project import CreateProjectUseCase
 from src.modules.projects.use_cases.delete_project import DeleteProjectUseCase
@@ -49,7 +56,9 @@ class ProjectService:
         actor_id: int,
         actor_role: UserRole,
     ) -> ProjectResponse:
-        return await self._update_project.execute(project_id, data, actor_id, actor_role)
+        return await self._update_project.execute(
+            project_id, data, actor_id, actor_role
+        )
 
     async def delete_project(
         self, project_id: int, actor_id: int, actor_role: UserRole
@@ -59,7 +68,9 @@ class ProjectService:
     async def get_project_members(
         self, project_id: int, skip: int = 0, limit: int = 100
     ) -> tuple[list[ProjectMemberResponse], int]:
-        return await self._get_project_members.execute(project_id, skip=skip, limit=limit)
+        return await self._get_project_members.execute(
+            project_id, skip=skip, limit=limit
+        )
 
     async def add_project_member(
         self,

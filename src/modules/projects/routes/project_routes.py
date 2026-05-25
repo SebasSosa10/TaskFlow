@@ -2,14 +2,25 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
-from src.modules.projects.schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate
-from src.modules.projects.schemas.project_member import ProjectMemberCreate, ProjectMemberResponse
+from src.modules.projects.schemas.project import (
+    ProjectCreate,
+    ProjectResponse,
+    ProjectUpdate,
+)
+from src.modules.projects.schemas.project_member import (
+    ProjectMemberCreate,
+    ProjectMemberResponse,
+)
 from src.modules.projects.services.project_service import ProjectService
 from src.modules.tasks.schemas.task import TaskResponse
 from src.modules.tasks.services.task_service import TaskService
 from src.modules.users.schemas.user import UserResponse
 from src.shared.base.schemas import ErrorResponse, MessageResponse, PaginatedResponse
-from src.shared.exceptions.domain import AlreadyExistsError, DomainException, ForbiddenError
+from src.shared.exceptions.domain import (
+    AlreadyExistsError,
+    DomainException,
+    ForbiddenError,
+)
 from src.shared.middleware.dependencies import (
     get_current_active_user,
     get_project_service,
@@ -36,9 +47,13 @@ async def create_project(
             data, current_user.id, current_user.role
         )
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.get(
@@ -72,7 +87,9 @@ async def get_project(
     try:
         return await project_service.get_project(project_id)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.put(
@@ -96,7 +113,9 @@ async def update_project(
             project_id, data, current_user.id, current_user.role
         )
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
         status_code = (
             status.HTTP_404_NOT_FOUND
@@ -124,9 +143,13 @@ async def delete_project(
         )
         return MessageResponse(message="Proyecto eliminado correctamente")
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.get(
@@ -149,7 +172,9 @@ async def list_project_members(
         )
         return PaginatedResponse(items=members, total=total, skip=skip, limit=limit)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.post(
@@ -174,11 +199,17 @@ async def add_project_member(
             project_id, data, current_user.id, current_user.role
         )
     except AlreadyExistsError as exc:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail=exc.message
+        ) from exc
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.get(
@@ -201,4 +232,6 @@ async def list_project_tasks(
         )
         return PaginatedResponse(items=tasks, total=total, skip=skip, limit=limit)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc

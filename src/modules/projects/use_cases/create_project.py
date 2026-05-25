@@ -29,7 +29,11 @@ class CreateProjectUseCase:
 
         project = await self.project_repository.create(data.model_dump())
         await self.record_history.execute(
-            actor_id, "create", "project", project.id, f"Proyecto creado: {project.name}"
+            actor_id,
+            "create",
+            "project",
+            project.id,
+            f"Proyecto creado: {project.name}",
         )
         return project_to_response(project)
 

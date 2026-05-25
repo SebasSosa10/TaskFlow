@@ -39,7 +39,9 @@ class UserService:
     ) -> UserResponse:
         return await self._create_user.execute(data, actor_id, actor_role)
 
-    async def get_users(self, skip: int = 0, limit: int = 100) -> tuple[list[UserResponse], int]:
+    async def get_users(
+        self, skip: int = 0, limit: int = 100
+    ) -> tuple[list[UserResponse], int]:
         return await self._get_users.execute(skip=skip, limit=limit)
 
     async def get_user(self, user_id: int) -> UserResponse:
@@ -50,7 +52,9 @@ class UserService:
     ) -> UserResponse:
         return await self._update_user.execute(user_id, data, actor_id, actor_role)
 
-    async def delete_user(self, user_id: int, actor_id: int, actor_role: UserRole) -> None:
+    async def delete_user(
+        self, user_id: int, actor_id: int, actor_role: UserRole
+    ) -> None:
         await self._delete_user.execute(user_id, actor_id, actor_role)
 
     async def update_user_role(
@@ -61,4 +65,6 @@ class UserService:
     async def update_user_status(
         self, user_id: int, data: UserStatusUpdate, actor_id: int, actor_role: UserRole
     ) -> UserResponse:
-        return await self._update_user_status.execute(user_id, data, actor_id, actor_role)
+        return await self._update_user_status.execute(
+            user_id, data, actor_id, actor_role
+        )

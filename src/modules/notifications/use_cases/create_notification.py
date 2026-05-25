@@ -1,5 +1,10 @@
-from src.modules.notifications.repositories.notification_repository import NotificationRepository
-from src.modules.notifications.schemas.notification import NotificationCreate, NotificationResponse
+from src.modules.notifications.repositories.notification_repository import (
+    NotificationRepository,
+)
+from src.modules.notifications.schemas.notification import (
+    NotificationCreate,
+    NotificationResponse,
+)
 from src.modules.users.entities.user import UserRole
 from src.modules.users.repositories.user_repository import UserRepository
 from src.shared.exceptions.domain import ForbiddenError, NotFoundError

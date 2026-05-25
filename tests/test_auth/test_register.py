@@ -13,7 +13,9 @@ class TestRegisterUseCase:
     def _make_uc(self, user_repo, record_history):
         return RegisterUseCase(user_repo, record_history)
 
-    @patch("src.modules.auth.use_cases.register.hash_password", return_value="hashed_pw")
+    @patch(
+        "src.modules.auth.use_cases.register.hash_password", return_value="hashed_pw"
+    )
     async def test_register_success(self, mock_hash, user_repo, record_history):
         user_repo.get_by_email.return_value = None
         user_repo.get_by_username.return_value = None
@@ -54,7 +56,9 @@ class TestRegisterUseCase:
         user_repo.get_by_username.return_value = make_user(username="taken")
         uc = self._make_uc(user_repo, record_history)
 
-        with pytest.raises(AlreadyExistsError, match="nombre de usuario ya está en uso"):
+        with pytest.raises(
+            AlreadyExistsError, match="nombre de usuario ya está en uso"
+        ):
             await uc.execute(
                 RegisterRequest(
                     email="new@test.com",

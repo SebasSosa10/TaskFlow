@@ -10,7 +10,9 @@ class HistoryModel(Base):
     __tablename__ = "history"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"), nullable=False, index=True
+    )
     action: Mapped[str] = mapped_column(String(100), nullable=False)
     entity_type: Mapped[str] = mapped_column(String(50), nullable=False, index=True)
     entity_id: Mapped[int] = mapped_column(nullable=False, index=True)

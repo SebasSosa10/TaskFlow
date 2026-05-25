@@ -41,7 +41,9 @@ class UpdateTaskUseCase:
         update_data = data.model_dump(exclude_unset=True)
 
         if "project_id" in update_data:
-            new_project = await self.project_repository.get_by_id(update_data["project_id"])
+            new_project = await self.project_repository.get_by_id(
+                update_data["project_id"]
+            )
             if not new_project:
                 raise NotFoundError(
                     f"Proyecto con id {update_data['project_id']} no encontrado"
@@ -50,7 +52,9 @@ class UpdateTaskUseCase:
         if "assignee_id" in update_data and update_data["assignee_id"] is not None:
             assignee = await self.user_repository.get_by_id(update_data["assignee_id"])
             if not assignee:
-                raise NotFoundError(f"Usuario con id {update_data['assignee_id']} no encontrado")
+                raise NotFoundError(
+                    f"Usuario con id {update_data['assignee_id']} no encontrado"
+                )
 
         if "status" in update_data:
             validate_status_transition(task.status, update_data["status"])

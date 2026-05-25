@@ -20,7 +20,9 @@ class TestCreateTaskEndpoint:
         assert data["title"] == "Sample Task"
         assert data["project_id"] == 1
 
-    async def test_create_task_project_not_found(self, authenticated_client, mock_task_service):
+    async def test_create_task_project_not_found(
+        self, authenticated_client, mock_task_service
+    ):
         mock_task_service.create_task.side_effect = NotFoundError(
             "Proyecto con id 999 no encontrado"
         )
@@ -34,9 +36,7 @@ class TestCreateTaskEndpoint:
         assert "Proyecto" in response.json()["detail"]
 
     async def test_create_task_forbidden(self, authenticated_client, mock_task_service):
-        mock_task_service.create_task.side_effect = ForbiddenError(
-            "No tienes permisos"
-        )
+        mock_task_service.create_task.side_effect = ForbiddenError("No tienes permisos")
 
         response = await authenticated_client.post(
             "/api/tasks",
@@ -74,7 +74,9 @@ class TestListTasksEndpoint:
         assert len(data["items"]) == 1
         assert data["items"][0]["title"] == "Sample Task"
 
-    async def test_list_tasks_with_pagination(self, authenticated_client, mock_task_service):
+    async def test_list_tasks_with_pagination(
+        self, authenticated_client, mock_task_service
+    ):
         mock_task_service.get_tasks.return_value = ([], 0)
 
         response = await authenticated_client.get("/api/tasks?skip=10&limit=5")

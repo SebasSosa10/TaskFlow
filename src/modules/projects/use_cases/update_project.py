@@ -34,7 +34,9 @@ class UpdateProjectUseCase:
         if "owner_id" in update_data:
             owner = await self.user_repository.get_by_id(update_data["owner_id"])
             if not owner:
-                raise NotFoundError(f"Propietario con id {update_data['owner_id']} no encontrado")
+                raise NotFoundError(
+                    f"Propietario con id {update_data['owner_id']} no encontrado"
+                )
 
         owner_id = update_data.get("owner_id", project.owner_id)
         self._ensure_can_manage(actor_role, actor_id, owner_id)
@@ -44,7 +46,11 @@ class UpdateProjectUseCase:
             raise NotFoundError(f"Recurso con id {project_id} no encontrado")
 
         await self.record_history.execute(
-            actor_id, "update", "project", project_id, f"Proyecto actualizado: {updated.name}"
+            actor_id,
+            "update",
+            "project",
+            project_id,
+            f"Proyecto actualizado: {updated.name}",
         )
         return project_to_response(updated)
 

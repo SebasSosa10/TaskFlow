@@ -13,7 +13,21 @@ from src.modules.history.services.history_service import HistoryService
 from src.modules.history.use_cases.get_history import GetHistoryUseCase
 from src.modules.history.use_cases.get_history_by_user import GetHistoryByUserUseCase
 from src.modules.history.use_cases.record_history import RecordHistoryUseCase
-from src.modules.projects.repositories.project_member_repository import ProjectMemberRepository
+from src.modules.kanban.services.kanban_service import KanbanService
+from src.modules.kanban.use_cases.get_kanban_board import GetKanbanBoardUseCase
+from src.modules.notifications.repositories.notification_repository import (
+    NotificationRepository,
+)
+from src.modules.notifications.services.notification_service import NotificationService
+from src.modules.notifications.use_cases.create_notification import (
+    CreateNotificationUseCase,
+)
+from src.modules.notifications.use_cases.get_notifications import (
+    GetNotificationsUseCase,
+)
+from src.modules.projects.repositories.project_member_repository import (
+    ProjectMemberRepository,
+)
 from src.modules.projects.repositories.project_repository import ProjectRepository
 from src.modules.projects.services.project_service import ProjectService
 from src.modules.projects.use_cases.add_project_member import AddProjectMemberUseCase
@@ -23,12 +37,6 @@ from src.modules.projects.use_cases.get_project import GetProjectUseCase
 from src.modules.projects.use_cases.get_project_members import GetProjectMembersUseCase
 from src.modules.projects.use_cases.get_projects import GetProjectsUseCase
 from src.modules.projects.use_cases.update_project import UpdateProjectUseCase
-from src.modules.kanban.services.kanban_service import KanbanService
-from src.modules.kanban.use_cases.get_kanban_board import GetKanbanBoardUseCase
-from src.modules.notifications.repositories.notification_repository import NotificationRepository
-from src.modules.notifications.services.notification_service import NotificationService
-from src.modules.notifications.use_cases.create_notification import CreateNotificationUseCase
-from src.modules.notifications.use_cases.get_notifications import GetNotificationsUseCase
 from src.modules.reports.services.report_service import ReportService
 from src.modules.tasks.repositories.task_repository import TaskRepository
 from src.modules.tasks.services.task_service import TaskService
@@ -70,7 +78,9 @@ def get_user_repository(db: Annotated[AsyncSession, Depends(get_db)]) -> UserRep
     return UserRepository(db)
 
 
-def get_project_repository(db: Annotated[AsyncSession, Depends(get_db)]) -> ProjectRepository:
+def get_project_repository(
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> ProjectRepository:
     return ProjectRepository(db)
 
 
@@ -84,7 +94,9 @@ def get_task_repository(db: Annotated[AsyncSession, Depends(get_db)]) -> TaskRep
     return TaskRepository(db)
 
 
-def get_history_repository(db: Annotated[AsyncSession, Depends(get_db)]) -> HistoryRepository:
+def get_history_repository(
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> HistoryRepository:
     return HistoryRepository(db)
 
 
@@ -153,16 +165,22 @@ def get_task_service(
     record_history: Annotated[RecordHistoryUseCase, Depends(get_record_history)],
 ) -> TaskService:
     return TaskService(
-        create_task=CreateTaskUseCase(task_repo, project_repo, user_repo, record_history),
+        create_task=CreateTaskUseCase(
+            task_repo, project_repo, user_repo, record_history
+        ),
         get_tasks=GetTasksUseCase(task_repo),
         get_task=GetTaskUseCase(task_repo),
         get_tasks_by_project=GetTasksByProjectUseCase(task_repo, project_repo),
         get_tasks_by_user=GetTasksByUserUseCase(task_repo, user_repo),
         get_tasks_by_status=GetTasksByStatusUseCase(task_repo),
-        update_task=UpdateTaskUseCase(task_repo, project_repo, user_repo, record_history),
+        update_task=UpdateTaskUseCase(
+            task_repo, project_repo, user_repo, record_history
+        ),
         delete_task=DeleteTaskUseCase(task_repo, project_repo, record_history),
         update_status=UpdateTaskStatusUseCase(task_repo, project_repo, record_history),
-        assign_task=AssignTaskUseCase(task_repo, project_repo, user_repo, record_history),
+        assign_task=AssignTaskUseCase(
+            task_repo, project_repo, user_repo, record_history
+        ),
     )
 
 
@@ -192,7 +210,9 @@ def get_kanban_service(
 
 
 def get_notification_service(
-    notification_repo: Annotated[NotificationRepository, Depends(get_notification_repository)],
+    notification_repo: Annotated[
+        NotificationRepository, Depends(get_notification_repository)
+    ],
     user_repo: Annotated[UserRepository, Depends(get_user_repository)],
 ) -> NotificationService:
     return NotificationService(

@@ -31,6 +31,7 @@ async def init_database() -> None:
 
     try:
         async with engine.begin() as conn:
+
             def _create_missing(sync_conn) -> tuple[set[str], set[str]]:
                 inspector = inspect(sync_conn)
                 existing_before = set(inspector.get_table_names())
@@ -55,8 +56,13 @@ async def init_database() -> None:
     if created:
         logger.info("Tablas creadas: %s", ", ".join(sorted(created)))
     if already_exists:
-        logger.info("Tablas ya existentes (sin cambios): %s", ", ".join(sorted(already_exists)))
+        logger.info(
+            "Tablas ya existentes (sin cambios): %s", ", ".join(sorted(already_exists))
+        )
 
     missing_from_db = expected_tables - created - already_exists
     if missing_from_db:
-        logger.warning("Tablas esperadas no registradas en BD: %s", ", ".join(sorted(missing_from_db)))
+        logger.warning(
+            "Tablas esperadas no registradas en BD: %s",
+            ", ".join(sorted(missing_from_db)),
+        )

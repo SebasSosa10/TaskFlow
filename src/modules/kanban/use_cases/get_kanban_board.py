@@ -22,7 +22,9 @@ class GetKanbanBoardUseCase:
 
         columns: list[KanbanColumn] = []
         for status in TaskStatus:
-            tasks = await self.task_repository.get_by_project_and_status(project_id, status)
+            tasks = await self.task_repository.get_by_project_and_status(
+                project_id, status
+            )
             columns.append(
                 KanbanColumn(
                     status=status,

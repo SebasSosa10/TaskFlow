@@ -262,9 +262,7 @@ class TestGetProjectMembersUseCase:
 # AddProjectMemberUseCase
 # ---------------------------------------------------------------------------
 class TestAddProjectMemberUseCase:
-    def _make_uc(
-        self, project_member_repo, project_repo, user_repo, record_history
-    ):
+    def _make_uc(self, project_member_repo, project_repo, user_repo, record_history):
         return AddProjectMemberUseCase(
             project_member_repo, project_repo, user_repo, record_history
         )
@@ -279,9 +277,7 @@ class TestAddProjectMemberUseCase:
             id=1, project_id=1, user_id=2
         )
 
-        uc = self._make_uc(
-            project_member_repo, project_repo, user_repo, record_history
-        )
+        uc = self._make_uc(project_member_repo, project_repo, user_repo, record_history)
         result = await uc.execute(
             1,
             ProjectMemberCreate(user_id=2),
@@ -295,13 +291,9 @@ class TestAddProjectMemberUseCase:
     ):
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=1)
         user_repo.get_by_id.return_value = make_user(id=2)
-        project_member_repo.get_by_project_and_user.return_value = (
-            make_project_member()
-        )
+        project_member_repo.get_by_project_and_user.return_value = make_project_member()
 
-        uc = self._make_uc(
-            project_member_repo, project_repo, user_repo, record_history
-        )
+        uc = self._make_uc(project_member_repo, project_repo, user_repo, record_history)
         with pytest.raises(AlreadyExistsError, match="ya es miembro"):
             await uc.execute(
                 1,
@@ -314,9 +306,7 @@ class TestAddProjectMemberUseCase:
         self, project_member_repo, project_repo, user_repo, record_history
     ):
         project_repo.get_by_id.return_value = None
-        uc = self._make_uc(
-            project_member_repo, project_repo, user_repo, record_history
-        )
+        uc = self._make_uc(project_member_repo, project_repo, user_repo, record_history)
 
         with pytest.raises(NotFoundError, match="Proyecto"):
             await uc.execute(
@@ -331,9 +321,7 @@ class TestAddProjectMemberUseCase:
     ):
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=1)
         user_repo.get_by_id.return_value = None
-        uc = self._make_uc(
-            project_member_repo, project_repo, user_repo, record_history
-        )
+        uc = self._make_uc(project_member_repo, project_repo, user_repo, record_history)
 
         with pytest.raises(NotFoundError, match="Usuario"):
             await uc.execute(
@@ -348,9 +336,7 @@ class TestAddProjectMemberUseCase:
     ):
         project_repo.get_by_id.return_value = make_project(id=1, owner_id=2)
         user_repo.get_by_id.return_value = make_user(id=3)
-        uc = self._make_uc(
-            project_member_repo, project_repo, user_repo, record_history
-        )
+        uc = self._make_uc(project_member_repo, project_repo, user_repo, record_history)
 
         with pytest.raises(ForbiddenError):
             await uc.execute(

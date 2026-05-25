@@ -21,6 +21,8 @@ class GetTasksByUserUseCase:
         if not user:
             raise NotFoundError(f"Usuario con id {user_id} no encontrado")
 
-        tasks = await self.task_repository.get_by_assignee(user_id, skip=skip, limit=limit)
+        tasks = await self.task_repository.get_by_assignee(
+            user_id, skip=skip, limit=limit
+        )
         total = await self.task_repository.count_by_assignee(user_id)
         return [task_to_response(t) for t in tasks], total

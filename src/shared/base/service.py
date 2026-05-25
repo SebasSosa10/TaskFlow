@@ -16,7 +16,9 @@ class BaseService(Generic[ModelT]):
             raise NotFoundError(f"Recurso con id {entity_id} no encontrado")
         return entity
 
-    async def get_all(self, skip: int = 0, limit: int = 100) -> tuple[list[ModelT], int]:
+    async def get_all(
+        self, skip: int = 0, limit: int = 100
+    ) -> tuple[list[ModelT], int]:
         items = await self.repository.get_all(skip=skip, limit=limit)
         total = await self.repository.count()
         return items, total

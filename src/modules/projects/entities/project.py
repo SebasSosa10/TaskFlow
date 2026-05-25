@@ -1,7 +1,9 @@
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import DateTime, Enum as SAEnum, ForeignKey, String, Text, func
+from sqlalchemy import DateTime
+from sqlalchemy import Enum as SAEnum
+from sqlalchemy import ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.shared.database.base import Base
@@ -18,9 +20,15 @@ class ProjectModel(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
-    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
+    owner_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"), nullable=False, index=True
+    )
     status: Mapped[ProjectStatus] = mapped_column(
-        SAEnum(ProjectStatus, values_callable=lambda x: [e.value for e in x], native_enum=False),
+        SAEnum(
+            ProjectStatus,
+            values_callable=lambda x: [e.value for e in x],
+            native_enum=False,
+        ),
         default=ProjectStatus.ACTIVO,
         nullable=False,
     )

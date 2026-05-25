@@ -4,7 +4,11 @@ from src.shared.exceptions.domain import BusinessRuleError, ForbiddenError
 
 ALLOWED_TRANSITIONS: dict[TaskStatus, set[TaskStatus]] = {
     TaskStatus.PENDIENTE: {TaskStatus.EN_PROGRESO, TaskStatus.BLOQUEADA},
-    TaskStatus.EN_PROGRESO: {TaskStatus.COMPLETADA, TaskStatus.BLOQUEADA, TaskStatus.PENDIENTE},
+    TaskStatus.EN_PROGRESO: {
+        TaskStatus.COMPLETADA,
+        TaskStatus.BLOQUEADA,
+        TaskStatus.PENDIENTE,
+    },
     TaskStatus.BLOQUEADA: {TaskStatus.PENDIENTE, TaskStatus.EN_PROGRESO},
     TaskStatus.COMPLETADA: set(),
 }

@@ -7,7 +7,9 @@ class GetHistoryUseCase:
     def __init__(self, history_repository: HistoryRepository) -> None:
         self.history_repository = history_repository
 
-    async def execute(self, skip: int = 0, limit: int = 100) -> tuple[list[HistoryResponse], int]:
+    async def execute(
+        self, skip: int = 0, limit: int = 100
+    ) -> tuple[list[HistoryResponse], int]:
         entries = await self.history_repository.get_all(skip=skip, limit=limit)
         total = await self.history_repository.count()
         return [history_to_response(e) for e in entries], total

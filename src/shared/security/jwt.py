@@ -6,7 +6,9 @@ from jose import JWTError, jwt
 from src.shared.config.settings import settings
 
 
-def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = None) -> str:
+def create_access_token(
+    data: dict[str, Any], expires_delta: timedelta | None = None
+) -> str:
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (
         expires_delta

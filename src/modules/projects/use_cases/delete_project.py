@@ -13,7 +13,9 @@ class DeleteProjectUseCase:
         self.project_repository = project_repository
         self.record_history = record_history
 
-    async def execute(self, project_id: int, actor_id: int, actor_role: UserRole) -> None:
+    async def execute(
+        self, project_id: int, actor_id: int, actor_role: UserRole
+    ) -> None:
         project = await self.project_repository.get_by_id(project_id)
         if not project:
             raise NotFoundError(f"Recurso con id {project_id} no encontrado")
@@ -27,5 +29,9 @@ class DeleteProjectUseCase:
 
         await self.project_repository.delete(project_id)
         await self.record_history.execute(
-            actor_id, "delete", "project", project_id, f"Proyecto eliminado: {project.name}"
+            actor_id,
+            "delete",
+            "project",
+            project_id,
+            f"Proyecto eliminado: {project.name}",
         )

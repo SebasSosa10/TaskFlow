@@ -77,7 +77,9 @@ class TaskRepository(BaseRepository[TaskModel]):
         )
         return result.scalar_one()
 
-    async def count_by_project_and_status(self, project_id: int, status: TaskStatus) -> int:
+    async def count_by_project_and_status(
+        self, project_id: int, status: TaskStatus
+    ) -> int:
         result = await self.session.execute(
             select(func.count())
             .select_from(TaskModel)

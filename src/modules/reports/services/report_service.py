@@ -5,8 +5,8 @@ from src.modules.reports.schemas.report import (
     PerformanceReportResponse,
     ProjectReportItem,
     ProjectsReportResponse,
-    TaskStatusCount,
     TasksReportResponse,
+    TaskStatusCount,
     UserPerformanceReport,
     UserReportItem,
     UsersReportResponse,
@@ -31,7 +31,9 @@ class ReportService:
         users = await self.user_repository.get_all(skip=0, limit=10000)
         total_users = await self.user_repository.count()
         total_tasks = await self.task_repository.count()
-        completed_tasks = await self.task_repository.count_by_status(TaskStatus.COMPLETADA)
+        completed_tasks = await self.task_repository.count_by_status(
+            TaskStatus.COMPLETADA
+        )
 
         user_reports: list[UserPerformanceReport] = []
         for user in users:
@@ -40,7 +42,9 @@ class ReportService:
             assigned_count = len(assigned)
             completed_count = len(completed)
             completion_rate = (
-                round(completed_count / assigned_count * 100, 2) if assigned_count else 0.0
+                round(completed_count / assigned_count * 100, 2)
+                if assigned_count
+                else 0.0
             )
             user_reports.append(
                 UserPerformanceReport(
@@ -100,7 +104,9 @@ class ReportService:
                 )
             )
 
-        return ProjectsReportResponse(total_projects=total_projects, projects=project_items)
+        return ProjectsReportResponse(
+            total_projects=total_projects, projects=project_items
+        )
 
     async def get_tasks_report(self) -> TasksReportResponse:
         total_tasks = await self.task_repository.count()
@@ -123,16 +129,20 @@ class ReportService:
 
         for user in users:
             owned = await self.project_repository.get_by_owner(user.id)
-            assigned = await self.task_repository.get_by_assignee(user.id, skip=0, limit=10000)
-            user_items.append(UserReportItem(
-                user_id=user.id,
-                username=user.username,
-                full_name=user.full_name,
-                email=user.email,
-                role=user.role,
-                is_active=user.is_active,
-                owned_projects=len(owned),
-                assigned_tasks=len(assigned),
-            ))
+            assigned = await self.task_repository.get_by_assignee(
+                user.id, skip=0, limit=10000
+            )
+            user_items.append(
+                UserReportItem(
+                    user_id=user.id,
+                    username=user.username,
+                    full_name=user.full_name,
+                    email=user.email,
+                    role=user.role,
+                    is_active=user.is_active,
+                    owned_projects=len(owned),
+                    assigned_tasks=len(assigned),
+                )
+            )
 
         return UsersReportResponse(total_users=total_users, users=user_items)

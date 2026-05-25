@@ -52,5 +52,7 @@ class BaseRepository(ABC, Generic[ModelT]):
         return True
 
     async def count(self) -> int:
-        result = await self.session.execute(select(func.count()).select_from(self.model))
+        result = await self.session.execute(
+            select(func.count()).select_from(self.model)
+        )
         return result.scalar_one()

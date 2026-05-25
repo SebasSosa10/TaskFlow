@@ -52,14 +52,12 @@ class TestProjectsReport:
         project_repo.get_all.return_value = [make_project(id=1, name="Proj1")]
         project_repo.count.return_value = 1
         task_repo.count_by_project.return_value = 10
-        task_repo.count_by_project_and_status.side_effect = (
-            lambda pid, status: {
-                TaskStatus.COMPLETADA: 5,
-                TaskStatus.EN_PROGRESO: 3,
-                TaskStatus.PENDIENTE: 1,
-                TaskStatus.BLOQUEADA: 1,
-            }[status]
-        )
+        task_repo.count_by_project_and_status.side_effect = lambda pid, status: {
+            TaskStatus.COMPLETADA: 5,
+            TaskStatus.EN_PROGRESO: 3,
+            TaskStatus.PENDIENTE: 1,
+            TaskStatus.BLOQUEADA: 1,
+        }[status]
 
         service = ReportService(user_repo, project_repo, task_repo)
         report = await service.get_projects_report()

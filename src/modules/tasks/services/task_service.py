@@ -1,3 +1,4 @@
+from src.modules.tasks.entities.task import TaskStatus
 from src.modules.tasks.schemas.task import (
     TaskAssignUpdate,
     TaskCreate,
@@ -5,7 +6,6 @@ from src.modules.tasks.schemas.task import (
     TaskStatusUpdate,
     TaskUpdate,
 )
-from src.modules.tasks.entities.task import TaskStatus
 from src.modules.tasks.use_cases.assign_task import AssignTaskUseCase
 from src.modules.tasks.use_cases.create_task import CreateTaskUseCase
 from src.modules.tasks.use_cases.delete_task import DeleteTaskUseCase
@@ -49,7 +49,9 @@ class TaskService:
     ) -> TaskResponse:
         return await self._create_task.execute(data, actor_id, actor_role)
 
-    async def get_tasks(self, skip: int = 0, limit: int = 100) -> tuple[list[TaskResponse], int]:
+    async def get_tasks(
+        self, skip: int = 0, limit: int = 100
+    ) -> tuple[list[TaskResponse], int]:
         return await self._get_tasks.execute(skip=skip, limit=limit)
 
     async def get_task(self, task_id: int) -> TaskResponse:
@@ -58,7 +60,9 @@ class TaskService:
     async def get_tasks_by_project(
         self, project_id: int, skip: int = 0, limit: int = 100
     ) -> tuple[list[TaskResponse], int]:
-        return await self._get_tasks_by_project.execute(project_id, skip=skip, limit=limit)
+        return await self._get_tasks_by_project.execute(
+            project_id, skip=skip, limit=limit
+        )
 
     async def get_tasks_by_user(
         self, user_id: int, skip: int = 0, limit: int = 100
@@ -75,7 +79,9 @@ class TaskService:
     ) -> TaskResponse:
         return await self._update_task.execute(task_id, data, actor_id, actor_role)
 
-    async def delete_task(self, task_id: int, actor_id: int, actor_role: UserRole) -> None:
+    async def delete_task(
+        self, task_id: int, actor_id: int, actor_role: UserRole
+    ) -> None:
         await self._delete_task.execute(task_id, actor_id, actor_role)
 
     async def update_status(

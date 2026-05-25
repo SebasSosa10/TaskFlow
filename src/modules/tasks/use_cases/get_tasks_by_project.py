@@ -21,6 +21,8 @@ class GetTasksByProjectUseCase:
         if not project:
             raise NotFoundError(f"Proyecto con id {project_id} no encontrado")
 
-        tasks = await self.task_repository.get_by_project(project_id, skip=skip, limit=limit)
+        tasks = await self.task_repository.get_by_project(
+            project_id, skip=skip, limit=limit
+        )
         total = await self.task_repository.count_by_project(project_id)
         return [task_to_response(t) for t in tasks], total

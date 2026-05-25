@@ -2,7 +2,11 @@ from src.modules.history.use_cases.record_history import RecordHistoryUseCase
 from src.modules.users.entities.user import UserRole
 from src.modules.users.repositories.user_repository import UserRepository
 from src.modules.users.schemas.user import UserResponse, UserUpdate
-from src.shared.exceptions.domain import AlreadyExistsError, ForbiddenError, NotFoundError
+from src.shared.exceptions.domain import (
+    AlreadyExistsError,
+    ForbiddenError,
+    NotFoundError,
+)
 from src.shared.security.password import hash_password
 from src.shared.utils.mappers import user_to_response
 
@@ -30,7 +34,9 @@ class UpdateUserUseCase:
                 raise AlreadyExistsError("El email ya está registrado")
 
         if "username" in update_data:
-            existing = await self.user_repository.get_by_username(update_data["username"])
+            existing = await self.user_repository.get_by_username(
+                update_data["username"]
+            )
             if existing and existing.id != user_id:
                 raise AlreadyExistsError("El nombre de usuario ya está en uso")
 

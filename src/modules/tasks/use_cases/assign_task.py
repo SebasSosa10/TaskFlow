@@ -43,7 +43,9 @@ class AssignTaskUseCase:
         if not assignee:
             raise NotFoundError(f"Usuario con id {data.assignee_id} no encontrado")
 
-        updated = await self.task_repository.update(task_id, {"assignee_id": data.assignee_id})
+        updated = await self.task_repository.update(
+            task_id, {"assignee_id": data.assignee_id}
+        )
         if not updated:
             raise NotFoundError(f"Recurso con id {task_id} no encontrado")
 

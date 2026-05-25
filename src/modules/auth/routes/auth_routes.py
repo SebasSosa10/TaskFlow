@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from src.modules.auth.schemas.auth import LoginRequest, RegisterRequest, TokenResponse
 from src.modules.auth.services.auth_service import AuthService
+from src.modules.users.schemas.user import UserResponse
 from src.shared.base.schemas import ErrorResponse
 from src.shared.exceptions.domain import (
     AlreadyExistsError,
@@ -12,7 +13,6 @@ from src.shared.exceptions.domain import (
     UnauthorizedError,
 )
 from src.shared.middleware.dependencies import get_auth_service, get_current_active_user
-from src.modules.users.schemas.user import UserResponse
 
 router = APIRouter(prefix="/auth", tags=["Autenticación"])
 
@@ -66,7 +66,9 @@ async def register(
         )
         raise HTTPException(status_code=status_code, detail=exc.message) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message
+        ) from exc
 
 
 @router.get(

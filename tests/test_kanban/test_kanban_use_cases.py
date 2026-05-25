@@ -8,9 +8,7 @@ from tests.conftest import make_project, make_task
 
 class TestGetKanbanBoardUseCase:
     async def test_get_board_success(self, project_repo, task_repo):
-        project_repo.get_by_id.return_value = make_project(
-            id=1, name="My Project"
-        )
+        project_repo.get_by_id.return_value = make_project(id=1, name="My Project")
         task_repo.get_by_project_and_status.side_effect = lambda pid, status: {
             TaskStatus.PENDIENTE: [make_task(id=1, status=TaskStatus.PENDIENTE)],
             TaskStatus.EN_PROGRESO: [make_task(id=2, status=TaskStatus.EN_PROGRESO)],

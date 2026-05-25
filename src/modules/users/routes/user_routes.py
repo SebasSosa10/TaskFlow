@@ -2,13 +2,23 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
-from src.modules.users.entities.user import UserRole
-from src.modules.users.schemas.user import UserCreate, UserResponse, UserRoleUpdate, UserStatusUpdate, UserUpdate
-from src.modules.users.services.user_service import UserService
-from src.shared.base.schemas import ErrorResponse, MessageResponse, PaginatedResponse
-from src.shared.exceptions.domain import AlreadyExistsError, DomainException, ForbiddenError
 from src.modules.tasks.schemas.task import TaskResponse
 from src.modules.tasks.services.task_service import TaskService
+from src.modules.users.entities.user import UserRole
+from src.modules.users.schemas.user import (
+    UserCreate,
+    UserResponse,
+    UserRoleUpdate,
+    UserStatusUpdate,
+    UserUpdate,
+)
+from src.modules.users.services.user_service import UserService
+from src.shared.base.schemas import ErrorResponse, MessageResponse, PaginatedResponse
+from src.shared.exceptions.domain import (
+    AlreadyExistsError,
+    DomainException,
+    ForbiddenError,
+)
 from src.shared.middleware.dependencies import (
     get_current_active_user,
     get_task_service,
@@ -28,7 +38,9 @@ router = APIRouter(prefix="/users", tags=["Usuarios"])
 )
 async def create_user(
     data: UserCreate,
-    current_user: Annotated[UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))],
+    current_user: Annotated[
+        UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))
+    ],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> UserResponse:
     try:
@@ -73,7 +85,9 @@ async def get_user(
     try:
         return await user_service.get_user(user_id)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.put(
@@ -90,7 +104,9 @@ async def get_user(
 async def update_user(
     user_id: int,
     data: UserUpdate,
-    current_user: Annotated[UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))],
+    current_user: Annotated[
+        UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))
+    ],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> UserResponse:
     try:
@@ -98,11 +114,17 @@ async def update_user(
             user_id, data, current_user.id, current_user.role
         )
     except AlreadyExistsError as exc:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail=exc.message
+        ) from exc
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.delete(
@@ -114,16 +136,22 @@ async def update_user(
 )
 async def delete_user(
     user_id: int,
-    current_user: Annotated[UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))],
+    current_user: Annotated[
+        UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))
+    ],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> MessageResponse:
     try:
         await user_service.delete_user(user_id, current_user.id, current_user.role)
         return MessageResponse(message="Usuario eliminado correctamente")
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.patch(
@@ -136,7 +164,9 @@ async def delete_user(
 async def update_user_role(
     user_id: int,
     data: UserRoleUpdate,
-    current_user: Annotated[UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))],
+    current_user: Annotated[
+        UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))
+    ],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> UserResponse:
     try:
@@ -144,9 +174,13 @@ async def update_user_role(
             user_id, data, current_user.id, current_user.role
         )
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.patch(
@@ -159,7 +193,9 @@ async def update_user_role(
 async def update_user_status(
     user_id: int,
     data: UserStatusUpdate,
-    current_user: Annotated[UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))],
+    current_user: Annotated[
+        UserResponse, Depends(require_roles(UserRole.ADMINISTRADOR))
+    ],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> UserResponse:
     try:
@@ -167,9 +203,13 @@ async def update_user_status(
             user_id, data, current_user.id, current_user.role
         )
     except ForbiddenError as exc:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=exc.message
+        ) from exc
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc
 
 
 @router.get(
@@ -187,7 +227,11 @@ async def list_user_tasks(
     limit: int = Query(default=100, ge=1, le=500),
 ) -> PaginatedResponse[TaskResponse]:
     try:
-        tasks, total = await task_service.get_tasks_by_user(user_id, skip=skip, limit=limit)
+        tasks, total = await task_service.get_tasks_by_user(
+            user_id, skip=skip, limit=limit
+        )
         return PaginatedResponse(items=tasks, total=total, skip=skip, limit=limit)
     except DomainException as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=exc.message
+        ) from exc

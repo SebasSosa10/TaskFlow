@@ -1,4 +1,6 @@
-from src.modules.projects.repositories.project_member_repository import ProjectMemberRepository
+from src.modules.projects.repositories.project_member_repository import (
+    ProjectMemberRepository,
+)
 from src.modules.projects.repositories.project_repository import ProjectRepository
 from src.modules.projects.schemas.project_member import ProjectMemberResponse
 from src.modules.users.repositories.user_repository import UserRepository

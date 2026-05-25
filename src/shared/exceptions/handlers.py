@@ -10,8 +10,8 @@ from src.shared.exceptions.domain import (
     ForbiddenError,
     NotFoundError,
     UnauthorizedError,
-    ValidationError as DomainValidationError,
 )
+from src.shared.exceptions.domain import ValidationError as DomainValidationError
 
 
 def register_exception_handlers(app: FastAPI) -> None:
@@ -23,7 +23,9 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     @app.exception_handler(AlreadyExistsError)
-    async def already_exists_handler(_: Request, exc: AlreadyExistsError) -> JSONResponse:
+    async def already_exists_handler(
+        _: Request, exc: AlreadyExistsError
+    ) -> JSONResponse:
         return JSONResponse(
             status_code=status.HTTP_409_CONFLICT,
             content={"detail": exc.message, "error_code": "ALREADY_EXISTS"},
@@ -61,7 +63,9 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     @app.exception_handler(DomainException)
-    async def domain_exception_handler(_: Request, exc: DomainException) -> JSONResponse:
+    async def domain_exception_handler(
+        _: Request, exc: DomainException
+    ) -> JSONResponse:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
             content={"detail": exc.message, "error_code": "DOMAIN_ERROR"},
@@ -77,7 +81,9 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     @app.exception_handler(ValidationError)
-    async def pydantic_validation_handler(_: Request, exc: ValidationError) -> JSONResponse:
+    async def pydantic_validation_handler(
+        _: Request, exc: ValidationError
+    ) -> JSONResponse:
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content={"detail": exc.errors(), "error_code": "PYDANTIC_VALIDATION_ERROR"},

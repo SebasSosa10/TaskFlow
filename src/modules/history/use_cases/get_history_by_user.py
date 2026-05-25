@@ -21,6 +21,8 @@ class GetHistoryByUserUseCase:
         if not user:
             raise NotFoundError(f"Usuario con id {user_id} no encontrado")
 
-        entries = await self.history_repository.get_by_user(user_id, skip=skip, limit=limit)
+        entries = await self.history_repository.get_by_user(
+            user_id, skip=skip, limit=limit
+        )
         total = await self.history_repository.count_by_user(user_id)
         return [history_to_response(e) for e in entries], total

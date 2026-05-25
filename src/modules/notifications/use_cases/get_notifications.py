@@ -1,4 +1,6 @@
-from src.modules.notifications.repositories.notification_repository import NotificationRepository
+from src.modules.notifications.repositories.notification_repository import (
+    NotificationRepository,
+)
 from src.modules.notifications.schemas.notification import NotificationResponse
 from src.shared.utils.mappers import notification_to_response
 

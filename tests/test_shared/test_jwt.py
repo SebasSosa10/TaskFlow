@@ -18,7 +18,9 @@ class TestCreateAccessToken:
         assert isinstance(token, str)
 
     def test_token_contains_payload_data(self):
-        token = create_access_token({"sub": "user@test.com", "user_id": 42, "role": "admin"})
+        token = create_access_token(
+            {"sub": "user@test.com", "user_id": 42, "role": "admin"}
+        )
         payload = decode_access_token(token)
         assert payload["sub"] == "user@test.com"
         assert payload["user_id"] == 42

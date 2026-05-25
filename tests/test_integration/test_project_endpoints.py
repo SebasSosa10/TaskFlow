@@ -5,7 +5,9 @@ from tests.test_integration.conftest import SAMPLE_PROJECT
 
 
 class TestCreateProjectEndpoint:
-    async def test_create_project_success(self, authenticated_client, mock_project_service):
+    async def test_create_project_success(
+        self, authenticated_client, mock_project_service
+    ):
         mock_project_service.create_project.return_value = SAMPLE_PROJECT
 
         response = await authenticated_client.post(
@@ -35,7 +37,9 @@ class TestCreateProjectEndpoint:
         assert response.status_code == 404
         assert "Propietario" in response.json()["detail"]
 
-    async def test_create_project_forbidden(self, authenticated_client, mock_project_service):
+    async def test_create_project_forbidden(
+        self, authenticated_client, mock_project_service
+    ):
         mock_project_service.create_project.side_effect = ForbiddenError(
             "No tienes permisos"
         )
@@ -65,7 +69,9 @@ class TestCreateProjectEndpoint:
 
 
 class TestListProjectsEndpoint:
-    async def test_list_projects_success(self, authenticated_client, mock_project_service):
+    async def test_list_projects_success(
+        self, authenticated_client, mock_project_service
+    ):
         mock_project_service.get_projects.return_value = ([SAMPLE_PROJECT], 1)
 
         response = await authenticated_client.get("/api/projects")

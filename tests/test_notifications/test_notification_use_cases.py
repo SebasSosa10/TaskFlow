@@ -39,9 +39,7 @@ class TestCreateNotificationUseCase:
     def _make_uc(self, notification_repo, user_repo):
         return CreateNotificationUseCase(notification_repo, user_repo)
 
-    async def test_create_notification_as_admin(
-        self, notification_repo, user_repo
-    ):
+    async def test_create_notification_as_admin(self, notification_repo, user_repo):
         user_repo.get_by_id.return_value = make_user(id=2)
         notification_repo.create.return_value = make_notification(
             id=1, user_id=2, title="Alert", message="Something happened"
@@ -56,9 +54,7 @@ class TestCreateNotificationUseCase:
         assert result.id == 1
         assert result.user_id == 2
 
-    async def test_create_notification_as_leader(
-        self, notification_repo, user_repo
-    ):
+    async def test_create_notification_as_leader(self, notification_repo, user_repo):
         user_repo.get_by_id.return_value = make_user(id=3)
         notification_repo.create.return_value = make_notification(id=2, user_id=3)
 
