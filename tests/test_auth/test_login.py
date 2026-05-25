@@ -14,15 +14,15 @@ class TestLoginUseCase:
         return LoginUseCase(user_repo, record_history)
 
     async def test_login_success(self, user_repo, record_history):
-        user = make_user(id=1, email="user@test.com", role=UserRole.USUARIO)
-        user_repo.get_by_email.return_value = user
+        user = make_user(id=1, username="testuser", role=UserRole.USUARIO)
+        user_repo.get_by_username.return_value = user
 
         with patch(
             "src.modules.auth.use_cases.login.verify_password", return_value=True
         ):
             uc = self._make_uc(user_repo, record_history)
             result = await uc.execute(
-                LoginRequest(email="user@test.com", password="password123")
+                LoginRequest(username="testuser", password="password123")
             )
 
         assert result.access_token
@@ -30,8 +30,8 @@ class TestLoginUseCase:
         record_history.execute.assert_awaited_once()
 
     async def test_login_wrong_password(self, user_repo, record_history):
-        user = make_user(email="user@test.com")
-        user_repo.get_by_email.return_value = user
+        user = make_user(username="testuser")
+        user_repo.get_by_username.return_value = user
 
         with patch(
             "src.modules.auth.use_cases.login.verify_password", return_value=False
@@ -39,21 +39,21 @@ class TestLoginUseCase:
             uc = self._make_uc(user_repo, record_history)
             with pytest.raises(UnauthorizedError, match="Credenciales inválidas"):
                 await uc.execute(
-                    LoginRequest(email="user@test.com", password="wrongpass")
+                    LoginRequest(username="testuser", password="wrongpass")
                 )
 
     async def test_login_user_not_found(self, user_repo, record_history):
-        user_repo.get_by_email.return_value = None
+        user_repo.get_by_username.return_value = None
         uc = self._make_uc(user_repo, record_history)
 
         with pytest.raises(UnauthorizedError, match="Credenciales inválidas"):
             await uc.execute(
-                LoginRequest(email="noone@test.com", password="password123")
+                LoginRequest(username="noexiste", password="password123")
             )
 
     async def test_login_inactive_user(self, user_repo, record_history):
-        user = make_user(email="user@test.com", is_active=False)
-        user_repo.get_by_email.return_value = user
+        user = make_user(username="testuser", is_active=False)
+        user_repo.get_by_username.return_value = user
 
         with patch(
             "src.modules.auth.use_cases.login.verify_password", return_value=True
@@ -61,5 +61,5 @@ class TestLoginUseCase:
             uc = self._make_uc(user_repo, record_history)
             with pytest.raises(ForbiddenError, match="Usuario inactivo"):
                 await uc.execute(
-                    LoginRequest(email="user@test.com", password="password123")
+                    LoginRequest(username="testuser", password="password123")
                 )

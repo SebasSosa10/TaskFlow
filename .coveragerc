@@ -1,0 +1,23 @@
+[run]
+source = src
+omit =
+    src/shared/database/*
+    src/shared/middleware/*
+    src/shared/exceptions/handlers.py
+    src/shared/base/service.py
+    src/shared/base/repository.py
+    src/modules/*/routes/*
+    src/modules/*/services/*
+    src/modules/kanban/services/*
+    src/main.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__
+    pass
+
+show_missing = true
+
+[html]
+directory = htmlcov

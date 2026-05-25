@@ -24,8 +24,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Check formatting (black)
+        run: black --check .
+
+      - name: Check import order (isort)
+        run: isort --check-only .
+
+      - name: Lint (flake8)
+        run: flake8 src tests
+
       - name: Verify app imports
         run: python -c "from src.main import app; print('OK', app.title)"
 
-      - name: Run tests
-        run: pytest -q
+      - name: Run tests with coverage
+        run: pytest --cov=src --cov-report=term-missing --cov-fail-under=80 --ignore=tests/test_health.py

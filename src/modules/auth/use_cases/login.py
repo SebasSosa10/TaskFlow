@@ -16,7 +16,7 @@ class LoginUseCase:
         self.record_history = record_history
 
     async def execute(self, credentials: LoginRequest) -> TokenResponse:
-        user = await self.user_repository.get_by_email(credentials.email)
+        user = await self.user_repository.get_by_username(credentials.username)
         if not user or not verify_password(credentials.password, user.hashed_password):
             raise UnauthorizedError("Credenciales inválidas")
 
