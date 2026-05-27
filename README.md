@@ -403,8 +403,8 @@ Este proyecto fue desarrollado siguiendo estándares profesionales de ingenierí
 
 | Nombre | Rol |
 |---|---|
-| **Joan Sebastián Sosa Bedoya** | Ingeniero de Software |
-| **Alejandra Mejía Patiño** | Ingeniera de Software |
+| **Joan Sebastián Sosa Bedoya** | Ingeniero de Software|
+| **Alejandra Mejía Patiño** | Ingeniera de Software|
 
 ---
 
