@@ -79,7 +79,7 @@ class TestCreateTaskUseCase:
         user_repo.get_by_id.return_value = None
         uc = self._make_uc(task_repo, project_repo, user_repo, record_history)
 
-        with pytest.raises(NotFoundError, match="Usuario"):
+        with pytest.raises(NotFoundError, match="Persona"):
             await uc.execute(
                 TaskCreate(title="T", project_id=1, assignee_id=999),
                 actor_id=1,
